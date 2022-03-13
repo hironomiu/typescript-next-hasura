@@ -3,6 +3,9 @@
 # DBのACL周りのセキュリティを設定したら消す
 codegen.yml
 
+# DBの定義が確定したら消す
+types/
+
 # dependencies
 /node_modules
 /.pnp

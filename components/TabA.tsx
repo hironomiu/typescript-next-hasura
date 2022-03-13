@@ -26,7 +26,7 @@ const TabA = () => {
       ))}
       <input
         type="text"
-        className="border-2 w-40 rounded my-4"
+        className="border-2 w-40 rounded my-4 px-2"
         value={input}
         onChange={handleChange}
       />

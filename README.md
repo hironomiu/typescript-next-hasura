@@ -168,3 +168,13 @@ yarn
 ```
 yarn add -D @graphql-codegen/typescript
 ```
+
+## Types generate
+
+`queries/queries.ts`作成後実行(`@client`は一旦コメントにし、s 実行後コメントを外す)
+
+実行後`types/generated/graphql.tsx`が作成されれば OK
+
+```
+yarn gen-types
+```

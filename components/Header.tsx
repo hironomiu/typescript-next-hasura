@@ -15,6 +15,9 @@ const Header = () => {
           <Link href="/tab-b">
             <a className="px-2">TabB</a>
           </Link>
+          <Link href="/hasura-fetch">
+            <a className="px-2">Hasura Fetch</a>
+          </Link>
         </div>
         <div className="mr-4">SignOut</div>
       </header>
