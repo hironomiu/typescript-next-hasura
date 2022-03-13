@@ -1,34 +1,170 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# typescript-next-hasura
 
-## Getting Started
+```
+yarn create next-app .
+```
 
-First, run the development server:
+```
+yarn add @apollo/client @apollo/react-hooks cross-fetch @heroicons/react
+```
 
-```bash
-npm run dev
-# or
+`next-page-tester`は要確認(Next v12 では動作しないため)
+
+```
+yarn add -D msw@0.35.0 next-page-tester jest @testing-library/react @types/jest @testing-library/jest-dom @testing-library/dom babel-jest @babel/core @testing-library/user-event jest-css-modules
+```
+
+```
+touch .babelrc
+```
+
+```
+{
+    "presets": [
+        "next/babel"
+    ]
+}
+```
+
+`package.json`
+
+```
+"jest": {
+        "testPathIgnorePatterns": [
+            "<rootDir>/.next/",
+            "<rootDir>/node_modules/"
+        ],
+        "moduleNameMapper": {
+            "\\.(css)$": "<rootDir>/node_modules/jest-css-modules"
+        }
+    }
+```
+
+```
+"test": "jest --env=jsdom --verbose"
+```
+
+## TypeScript
+
+[Create tsconfig.json](https://nextjs.org/learn/excel/typescript/create-tsconfig)
+
+```
+touch tsconfig.json
+yarn add -D typescript @types/react @types/node
+```
+
+`yarn dev`で起動し`tsconfig.json`に反映
+
+```
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Rename
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+`./pages/_app.js` -> `./pages/_app.tsx`,`./pages/index.js` -> `./pages/index.tsx`
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+`_app.tsx`
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```
+import '../styles/globals.css'
+import { AppProps } from 'next/app'
 
-## Learn More
+function MyApp({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />
+}
 
-To learn more about Next.js, take a look at the following resources:
+export default MyApp
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`index.tsx`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+const Home = () => {
+  return <div>index</div>
+}
 
-## Deploy on Vercel
+export default Home
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Tailwind
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[Install Tailwind CSS with Next.js](https://tailwindcss.com/docs/guides/nextjs)
+
+```
+yarn add tailwindcss@latest postcss@latest autoprefixer@latest
+npx tailwindcss init -p
+```
+
+`tailwind.config.js`
+
+```
+module.exports = {
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+```
+
+`./styles/globals.css`
+
+```
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+## GraphQL codegen
+
+[Installation](https://www.graphql-code-generator.com/docs/getting-started/installation)
+
+※ npm では次の init でエラーとなるため yarn を選択した（全体含め yarn を使う理由）
+
+```
+yarn add graphql
+yarn add -D @graphql-codegen/cli
+```
+
+```
+yarn graphql-codegen init
+```
+
+`? What type of application are you building? ` -> `Application built with React`を選択
+
+`Where is your schema?:` -> 作成した HASURA API の`GraphQL Endpoint`を指定
+
+`? Where are your operations and fragments?:` -> `queries/**/*.ts`を指定
+
+`? Pick plugins: (Press <space> to select, <a> to toggle all, <i> to invert selection , and <enter> to proceed)` -> そのままエンター(以下が選択されている)
+
+```
+❯◉ TypeScript (required by other typescript plugins)
+ ◉ TypeScript Operations (operations and fragments)
+ ◉ TypeScript React Apollo (typed components and HOCs)
+ ◯ TypeScript GraphQL files modules (declarations for .graphql files)
+ ◯ TypeScript GraphQL document nodes (embedded GraphQL document)
+ ◯ Introspection Fragment Matcher (for Apollo Client)
+ ◯ Urql Introspection (for Urql Client)
+```
+
+`? Where to write the output` -> `types/generated/graphql.tsx`を指定
+
+`? Do you want to generate an introspection file?` -> n
+
+`? How to name the config file?` -> `codegen.yml`を指定
+
+`? What script in package.json should run the codegen? ` -> `gen-types`を指定
+
+`yarn`の実行
+
+```
+yarn
+```
+
+```
+yarn add -D @graphql-codegen/typescript
+```

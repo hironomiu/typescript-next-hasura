@@ -1,5 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# DBのACL周りのセキュリティを設定したら消す
+codegen.yml
+
 # dependencies
 /node_modules
 /.pnp
