@@ -18,6 +18,9 @@ const Header = () => {
           <Link href="/hasura-fetch">
             <a className="px-2">Hasura Fetch</a>
           </Link>
+          <Link href="/hasura-fetch-cache">
+            <a className="px-2">Hasura Fetch Cache</a>
+          </Link>
         </div>
         <div className="mr-4">SignOut</div>
       </header>
