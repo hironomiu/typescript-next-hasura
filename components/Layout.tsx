@@ -10,12 +10,14 @@ interface Props {
 
 const Layout = ({ children, title }: Props) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col min-h-screen">
       <Head>
         <title>{title}</title>
       </Head>
       <Header />
-      <main>{children}</main>
+      <main className="flex flex-1 flex-col justify-center items-center">
+        {children}
+      </main>
       <Footer />
     </div>
   )

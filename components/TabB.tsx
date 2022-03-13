@@ -16,7 +16,13 @@ const TabB = () => {
       {memos?.map((memo, index) => (
         <div key={index}>{memo.title}</div>
       ))}
-      <button onClick={handleClickToggle}>toggle</button>
+      <button
+        className="w-20 h-8 bg-purple-400 rounded my-4"
+        onClick={handleClickToggle}
+      >
+        toggle
+      </button>
+      {toggle ? <div>toggle</div> : null}
     </div>
   )
 }
