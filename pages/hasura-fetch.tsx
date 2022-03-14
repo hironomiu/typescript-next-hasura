@@ -10,6 +10,7 @@ import {
 
 const HasuraFetch = () => {
   const [input, setInput] = useState({ id: '', name: '' })
+  // cache-and-networkなのでloadingは不要
   const { data, error } = useQuery<GetUsersQuery>(GET_USERS, {
     fetchPolicy: 'cache-and-network',
   })
@@ -72,6 +73,7 @@ const HasuraFetch = () => {
         <p>loading...</p>
       </Layout>
     )
+
   return (
     <Layout title="hasura-fetch">
       <form className="">
