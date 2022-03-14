@@ -14,32 +14,39 @@ const HasuraFetch = () => {
     fetchPolicy: 'cache-and-network',
   })
 
-  const [insert_users_one] = useMutation<CreateUserMutation>(CREATE_USER, {
-    update(cache, { data: { insert_users_one } }) {
-      const cacheId = cache.identify(insert_users_one)
-      cache.modify({
-        fields: {
-          users(existingUsers, { toReference }) {
-            return [toReference(cacheId), ...existingUsers]
+  const [insert_users_one, create] = useMutation<CreateUserMutation>(
+    CREATE_USER,
+    {
+      update(cache, { data: { insert_users_one } }) {
+        const cacheId = cache.identify(insert_users_one)
+        cache.modify({
+          fields: {
+            users(existingUsers, { toReference }) {
+              return [toReference(cacheId), ...existingUsers]
+            },
           },
-        },
-      })
-    },
-  })
+        })
+      },
+    }
+  )
 
-  const [delete_users_by_pk] = useMutation<DeleteUserMutation>(DELETE_USER, {
-    update(cache, { data: { delete_users_by_pk } }) {
-      cache.modify({
-        fields: {
-          users(existingUsers, { readField }) {
-            return existingUsers.filter(
-              (user) => delete_users_by_pk.id !== readField('id', user)
-            )
+  // TODO 命名 del
+  const [delete_users_by_pk, del] = useMutation<DeleteUserMutation>(
+    DELETE_USER,
+    {
+      update(cache, { data: { delete_users_by_pk } }) {
+        cache.modify({
+          fields: {
+            users(existingUsers, { readField }) {
+              return existingUsers.filter(
+                (user) => delete_users_by_pk.id !== readField('id', user)
+              )
+            },
           },
-        },
-      })
-    },
-  })
+        })
+      },
+    }
+  )
 
   if (error)
     return (
@@ -47,7 +54,24 @@ const HasuraFetch = () => {
         <p>error:{error.message}</p>
       </Layout>
     )
-
+  if (create.error)
+    return (
+      <Layout title="hasura error">
+        <p>error:{create.error.message}</p>
+      </Layout>
+    )
+  if (del.error)
+    return (
+      <Layout title="hasura error">
+        <p>error:{create.error.message}</p>
+      </Layout>
+    )
+  if (create.loading || del.loading)
+    return (
+      <Layout title="hasura loading">
+        <p>loading...</p>
+      </Layout>
+    )
   return (
     <Layout title="hasura-fetch">
       <form className="">
