@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import Layout from '../components/Layout'
 import { useMutation, useQuery } from '@apollo/client'
-import { GET_USERS, CREATE_USER } from '../queries/queries'
-import { GetUsersQuery, CreateUserMutation } from '../types/generated/graphql'
+import { GET_USERS, CREATE_USER, DELETE_USER } from '../queries/queries'
+import {
+  GetUsersQuery,
+  CreateUserMutation,
+  DeleteUserMutation,
+} from '../types/generated/graphql'
 
 const HasuraFetch = () => {
   const [input, setInput] = useState({ id: '', name: '' })
@@ -17,6 +21,20 @@ const HasuraFetch = () => {
         fields: {
           users(existingUsers, { toReference }) {
             return [toReference(cacheId), ...existingUsers]
+          },
+        },
+      })
+    },
+  })
+
+  const [delete_users_by_pk] = useMutation<DeleteUserMutation>(DELETE_USER, {
+    update(cache, { data: { delete_users_by_pk } }) {
+      cache.modify({
+        fields: {
+          users(existingUsers, { readField }) {
+            return existingUsers.filter(
+              (user) => delete_users_by_pk.id !== readField('id', user)
+            )
           },
         },
       })
@@ -61,7 +79,24 @@ const HasuraFetch = () => {
         </button>
       </form>
       {data?.users.map((user) => {
-        return <p key={user.id}>{user.name}</p>
+        // TODO 綺麗にする
+        return (
+          <div key={user.id} className="flex flex-row my-1">
+            <p>{user.name}</p>
+            <button
+              onClick={async () =>
+                await delete_users_by_pk({
+                  variables: {
+                    id: user.id,
+                  },
+                })
+              }
+              className="border px-2 mx-2 rounded bg-green-500"
+            >
+              delete
+            </button>
+          </div>
+        )
       })}
     </Layout>
   )
