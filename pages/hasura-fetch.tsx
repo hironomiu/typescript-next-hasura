@@ -48,31 +48,26 @@ const HasuraFetch = () => {
       },
     }
   )
-
-  if (error)
+  const LoadingOrError = ({ title, message }) => {
     return (
-      <Layout title="hasura error">
-        <p>error:{error.message}</p>
+      <Layout title={title}>
+        <p>{message}</p>
       </Layout>
     )
+  }
+  if (error)
+    return <LoadingOrError title="hasura error" message={error.message} />
+
   if (create.error)
     return (
-      <Layout title="hasura error">
-        <p>error:{create.error.message}</p>
-      </Layout>
+      <LoadingOrError title="hasura error" message={create.error.message} />
     )
+
   if (del.error)
-    return (
-      <Layout title="hasura error">
-        <p>error:{create.error.message}</p>
-      </Layout>
-    )
+    return <LoadingOrError title="hasura error" message={del.error.message} />
+
   if (create.loading || del.loading)
-    return (
-      <Layout title="hasura loading">
-        <p>loading...</p>
-      </Layout>
-    )
+    return <LoadingOrError title="hasura loading" message="loaging..." />
 
   return (
     <Layout title="hasura-fetch">
