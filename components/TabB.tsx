@@ -1,7 +1,8 @@
+import { memo } from 'react'
 import { memoVar, toggleVar } from '../cache'
 import { useReactiveVar } from '@apollo/client'
 
-const TabB = (): JSX.Element => {
+const TabB = memo((): JSX.Element => {
   const memos = useReactiveVar(memoVar)
   const toggle = useReactiveVar(toggleVar)
 
@@ -25,6 +26,6 @@ const TabB = (): JSX.Element => {
       {toggle ? <div>toggle</div> : null}
     </div>
   )
-}
+})
 
 export default TabB
