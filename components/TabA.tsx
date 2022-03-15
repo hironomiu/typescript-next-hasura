@@ -41,10 +41,11 @@ const TabA = memo((): JSX.Element => {
       <button
         className="w-20 h-8 bg-sky-400 rounded my-4"
         onClick={handleClickToggle}
+        data-testid="toggle-button"
       >
         toggle
       </button>
-      {toggle ? <div>toggle</div> : null}
+      {toggle ? <div>toggle!!</div> : null}
     </div>
   )
 })
