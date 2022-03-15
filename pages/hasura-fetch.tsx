@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FormEvent, useState, FC } from 'react'
 import Layout from '../components/Layout'
 import { useMutation, useQuery } from '@apollo/client'
 import { GET_USERS, CREATE_USER, DELETE_USER } from '../queries/queries'
@@ -48,10 +48,14 @@ const HasuraFetch = () => {
       },
     }
   )
-  const LoadingOrError = ({ title, message }) => {
+  type LoadingOrErrorProps<T> = {
+    title: T
+    message: T
+  }
+  const LoadingOrError = (props: LoadingOrErrorProps<string>) => {
     return (
-      <Layout title={title}>
-        <p>{message}</p>
+      <Layout title={props.title}>
+        <p>{props.message}</p>
       </Layout>
     )
   }
@@ -69,6 +73,19 @@ const HasuraFetch = () => {
   if (create.loading || del.loading)
     return <LoadingOrError title="hasura loading" message="loaging..." />
 
+  const handleClick = async (e: FormEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    try {
+      await insert_users_one({
+        variables: {
+          name: input.name,
+        },
+      })
+    } catch (error) {
+      alert(error.message)
+    }
+    setInput({ id: '', name: '' })
+  }
   return (
     <Layout title="hasura-fetch">
       <form className="">
@@ -78,24 +95,7 @@ const HasuraFetch = () => {
           value={input.name}
           onChange={(e) => setInput({ ...input, name: e.target.value })}
         />
-        <button
-          className="px-2"
-          disabled={!input.name}
-          // TODO 綺麗にする
-          onClick={async (e) => {
-            e.preventDefault()
-            try {
-              await insert_users_one({
-                variables: {
-                  name: input.name,
-                },
-              })
-            } catch (error) {
-              alert(error.message)
-            }
-            setInput({ id: '', name: '' })
-          }}
-        >
+        <button className="px-2" disabled={!input.name} onClick={handleClick}>
           追加
         </button>
       </form>
