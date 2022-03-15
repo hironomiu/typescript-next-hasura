@@ -1,6 +1,6 @@
 import Layout from '../components/Layout'
 import TabA from '../components/TabA'
-const TabAPage = () => {
+const TabAPage = (): JSX.Element => {
   return (
     <Layout title="tab-a">
       <TabA />

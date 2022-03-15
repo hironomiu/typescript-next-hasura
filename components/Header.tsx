@@ -1,7 +1,6 @@
-import React from 'react'
 import Link from 'next/link'
 
-const Header = () => {
+const Header = (): JSX.Element => {
   return (
     <div className="flex flex-col bg-gray-300 w-screen">
       <header className="flex flex-row h-10 justify-between items-center">

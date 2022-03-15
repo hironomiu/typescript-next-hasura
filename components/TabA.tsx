@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import { useReactiveVar } from '@apollo/client'
 import { memoVar, toggleVar } from '../cache'
 
-const TabA = () => {
+const TabA = (): JSX.Element => {
   const [input, setInput] = useState<string>('')
   const memos = useReactiveVar(memoVar)
   const toggle = useReactiveVar(toggleVar)

@@ -1,6 +1,6 @@
 import Layout from '../components/Layout'
 
-const Home = () => {
+const Home = (): JSX.Element => {
   return (
     <div>
       <Layout title="home">

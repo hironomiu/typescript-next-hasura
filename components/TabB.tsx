@@ -1,7 +1,7 @@
 import { memoVar, toggleVar } from '../cache'
 import { useReactiveVar } from '@apollo/client'
 
-const TabB = () => {
+const TabB = (): JSX.Element => {
   const memos = useReactiveVar(memoVar)
   const toggle = useReactiveVar(toggleVar)
 

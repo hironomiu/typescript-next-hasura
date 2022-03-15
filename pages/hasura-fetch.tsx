@@ -8,7 +8,7 @@ import {
   DeleteUserMutation,
 } from '../types/generated/graphql'
 
-const HasuraFetch = () => {
+const HasuraFetch = (): JSX.Element => {
   const [input, setInput] = useState({ id: '', name: '' })
   // cache-and-networkなのでloadingは不要
   const { data, error } = useQuery<GetUsersQuery>(GET_USERS, {
@@ -52,7 +52,7 @@ const HasuraFetch = () => {
     title: T
     message: T
   }
-  const LoadingOrError = (props: LoadingOrErrorProps<string>) => {
+  const LoadingOrError = (props: LoadingOrErrorProps<string>): JSX.Element => {
     return (
       <Layout title={props.title}>
         <p>{props.message}</p>

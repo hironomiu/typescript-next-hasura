@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client'
 import Layout from '../components/Layout'
 import { GET_USERS_LOCAL } from '../queries/queries'
 import { GetUsersQuery } from '../types/generated/graphql'
-const HasuraFetchCache = () => {
+const HasuraFetchCache = (): JSX.Element => {
   const { data, error } = useQuery<GetUsersQuery>(GET_USERS_LOCAL)
 
   if (error)

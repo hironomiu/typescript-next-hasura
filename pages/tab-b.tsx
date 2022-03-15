@@ -1,6 +1,6 @@
 import Layout from '../components/Layout'
 import TabB from '../components/TabB'
-const TabBPage = () => {
+const TabBPage = (): JSX.Element => {
   return (
     <Layout title="tab-b">
       <TabB />
