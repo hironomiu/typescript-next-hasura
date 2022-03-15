@@ -95,15 +95,26 @@ const HasuraFetch = (): JSX.Element => {
           value={input.name}
           onChange={(e) => setInput({ ...input, name: e.target.value })}
         />
-        <button className="px-2" disabled={!input.name} onClick={handleClick}>
+        <button
+          className="bg-blue-300 mx-2 px-4 rounded"
+          disabled={!input.name}
+          onClick={handleClick}
+        >
           追加
         </button>
       </form>
       {data?.users.map((user) => {
         // TODO 綺麗にする
         return (
-          <div key={user.id} className="flex flex-row my-1">
+          <div key={user.id} className="flex flex-row my-2">
             <p>{user.name}</p>
+            {/* TODO 更新処理の追加 */}
+            <button
+              onClick={() => null}
+              className="border px-4 mx-2 bg-orange-300 rounded"
+            >
+              更新
+            </button>
             <button
               onClick={async () =>
                 await delete_users_by_pk({
@@ -112,9 +123,9 @@ const HasuraFetch = (): JSX.Element => {
                   },
                 })
               }
-              className="border px-2 mx-2 rounded bg-green-500"
+              className="border px-4 mx-2 rounded bg-green-500"
             >
-              delete
+              削除
             </button>
           </div>
         )
