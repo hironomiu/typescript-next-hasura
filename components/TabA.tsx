@@ -3,6 +3,8 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import { useReactiveVar } from '@apollo/client'
 import { memoVar, toggleVar } from '../cache'
 
+// TODO eslint
+// eslint-disable-next-line react/display-name
 const TabA = memo((): JSX.Element => {
   const [input, setInput] = useState<string>('')
   const memos = useReactiveVar(memoVar)
