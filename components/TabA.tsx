@@ -3,9 +3,9 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import { useReactiveVar } from '@apollo/client'
 import { memoVar, toggleVar } from '../cache'
 
-// TODO eslint
-// eslint-disable-next-line react/display-name
-const TabA = memo((): JSX.Element => {
+// memoを使う際、下に引っかかるため () => から function FuncName() に修正
+// https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/display-name.md
+const TabA = memo(function TabA(): JSX.Element {
   const [input, setInput] = useState<string>('')
   const memos = useReactiveVar(memoVar)
   const toggle = useReactiveVar(toggleVar)
