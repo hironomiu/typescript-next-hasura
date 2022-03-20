@@ -23,7 +23,7 @@ const TabA = memo(function TabA(): JSX.Element {
   }
   return (
     <div className="flex flex-col items-center my-4">
-      <h1 className="text-2xl">makeVar</h1>
+      <h1 className="text-2xl">TabA makeVar</h1>
       {memos?.map((memo, index) => (
         <div key={index}>{memo.title}</div>
       ))}

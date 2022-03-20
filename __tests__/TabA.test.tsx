@@ -6,7 +6,7 @@ import TabA from '../components/TabA'
 describe('TabA', () => {
   it('', () => {
     render(<TabA />)
-    expect(screen.getByText('makeVar')).toBeInTheDocument()
+    expect(screen.getByText('TabA makeVar')).toBeInTheDocument()
   })
   it('', async () => {
     render(<TabA />)

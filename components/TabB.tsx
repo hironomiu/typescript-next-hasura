@@ -15,17 +15,18 @@ const TabB = memo(function TabB(): JSX.Element {
   }
   return (
     <div className="flex flex-col items-center my-4">
-      <h1 className="text-2xl">makeVar</h1>
+      <h1 className="text-2xl">TabB makeVar</h1>
       {memos?.map((memo, index) => (
         <div key={index}>{memo.title}</div>
       ))}
       <button
         className="w-20 h-8 bg-purple-400 rounded my-4"
         onClick={handleClickToggle}
+        data-testid="toggle-button"
       >
         toggle
       </button>
-      {toggle ? <div>toggle</div> : null}
+      {toggle ? <div>toggle!!</div> : null}
     </div>
   )
 })
