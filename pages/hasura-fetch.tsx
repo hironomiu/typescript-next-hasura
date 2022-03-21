@@ -11,7 +11,7 @@ import {
 const HasuraFetch = (): JSX.Element => {
   const [input, setInput] = useState({ id: '', name: '' })
   // cache-and-networkなのでloadingは不要
-  const { data, error } = useQuery<GetUsersQuery>(GET_USERS, {
+  const { data, error, loading } = useQuery<GetUsersQuery>(GET_USERS, {
     fetchPolicy: 'cache-and-network',
   })
 
@@ -70,8 +70,8 @@ const HasuraFetch = (): JSX.Element => {
   if (del.error)
     return <LoadingOrError title="hasura error" message={del.error.message} />
 
-  if (create.loading || del.loading)
-    return <LoadingOrError title="hasura loading" message="loaging..." />
+  if (create.loading || del.loading || loading)
+    return <LoadingOrError title="hasura loading" message="loading..." />
 
   const handleClick = async (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -99,6 +99,7 @@ const HasuraFetch = (): JSX.Element => {
           className="bg-blue-300 mx-2 px-4 rounded"
           disabled={!input.name}
           onClick={handleClick}
+          data-testid="add-button"
         >
           追加
         </button>
