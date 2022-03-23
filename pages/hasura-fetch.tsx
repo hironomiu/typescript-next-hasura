@@ -88,6 +88,7 @@ const HasuraFetch = (): JSX.Element => {
   }
   return (
     <Layout title="hasura-fetch">
+      <h1>Fetch</h1>
       <form className="">
         <input
           className="border px-2"

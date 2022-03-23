@@ -13,6 +13,7 @@ describe('HasraFetch', () => {
     render(page)
     expect(screen.getByText('loading...')).toBeInTheDocument()
     // TODO Only absolute URLs are supported
+    expect(await screen.findByText('Fetch')).toBeInTheDocument()
     expect(await screen.findByTestId('add-button')).toBeInTheDocument()
   })
 })
