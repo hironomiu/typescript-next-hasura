@@ -52,6 +52,7 @@
     ],
     "moduleNameMapper": {
       "\\.(css)$": "<rootDir>/node_modules/jest-css-modules"
-    }
+    },
+    "globalSetup": "<rootDir>/__tests__/setupEnv.ts"
   }
 }

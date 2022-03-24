@@ -1,4 +1,4 @@
-import { FormEvent, useState, FC } from 'react'
+import { FormEvent, useState } from 'react'
 import Layout from '../components/Layout'
 import { useMutation, useQuery } from '@apollo/client'
 import { GET_USERS, CREATE_USER, DELETE_USER } from '../queries/queries'
@@ -52,19 +52,19 @@ const HasuraFetch = (): JSX.Element => {
   // TODO Only absolute URLs are supported
   // HasuraFetch.test.tsxが上のエラーで落ちる
 
-  // type LoadingOrErrorProps<T> = {
-  //   title: T
-  //   message: T
-  // }
-  // const LoadingOrError = (props: LoadingOrErrorProps<string>): JSX.Element => {
-  //   return (
-  //     <Layout title={props.title}>
-  //       <p>Error:{props.message}</p>
-  //     </Layout>
-  //   )
-  // }
-  // if (error)
-  //   return <LoadingOrError title="hasura error" message={error.message} />
+  type LoadingOrErrorProps<T> = {
+    title: T
+    message: T
+  }
+  const LoadingOrError = (props: LoadingOrErrorProps<string>): JSX.Element => {
+    return (
+      <Layout title={props.title}>
+        <p>Error:{props.message}</p>
+      </Layout>
+    )
+  }
+  if (error)
+    return <LoadingOrError title="hasura error" message={error.message} />
 
   // if (create.error)
   //   return (

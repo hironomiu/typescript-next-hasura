@@ -12,6 +12,14 @@ beforeAll(() => {
   server.listen()
 })
 
+afterEach(() => {
+  server.resetHandlers()
+})
+
+afterAll(() => {
+  server.close()
+})
+
 describe('HasraFetch', () => {
   it('HasuraFetch', async () => {
     const { page } = await getPage({
@@ -20,7 +28,7 @@ describe('HasraFetch', () => {
     render(page)
     expect(screen.getByText('Loading...')).toBeInTheDocument()
     expect(await screen.findByText('Fetch')).toBeInTheDocument()
-    screen.debug()
     expect(await screen.findByTestId('add-button')).toBeInTheDocument()
+    screen.debug()
   })
 })
