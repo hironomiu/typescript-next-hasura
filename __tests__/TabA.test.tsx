@@ -13,4 +13,9 @@ describe('TabA', () => {
     userEvent.click(screen.getByTestId('toggle-button'))
     expect(await screen.findByText('toggle!!')).toBeInTheDocument()
   })
+  it('', () => {
+    render(<TabA />)
+    expect(screen.getByTestId('input-input')).toBeInTheDocument()
+    expect(screen.getByTestId('input-button')).toBeInTheDocument()
+  })
 })

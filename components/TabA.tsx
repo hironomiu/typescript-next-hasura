@@ -31,11 +31,13 @@ const TabA = memo(function TabA(): JSX.Element {
         type="text"
         className="border-2 w-40 rounded my-4 px-2"
         value={input}
+        data-testid="input-input"
         onChange={handleChange}
       />
       <button
         disabled={!input}
         onClick={handleClick}
+        data-testid="input-button"
         className="disabled:bg-gray-200 w-40 rounded bg-sky-300"
       >
         追加
