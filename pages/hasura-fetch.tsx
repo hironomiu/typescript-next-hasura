@@ -66,13 +66,13 @@ const HasuraFetch = (): JSX.Element => {
   if (error)
     return <LoadingOrError title="hasura error" message={error.message} />
 
-  // if (create.error)
-  //   return (
-  //     <LoadingOrError title="hasura error" message={create.error.message} />
-  //   )
+  if (create.error)
+    return (
+      <LoadingOrError title="hasura error" message={create.error.message} />
+    )
 
-  // if (del.error)
-  //   return <LoadingOrError title="hasura error" message={del.error.message} />
+  if (del.error)
+    return <LoadingOrError title="hasura error" message={del.error.message} />
 
   if (create.loading || del.loading || loading)
     // return <LoadingOrError title="hasura loading" message="loading..." />
