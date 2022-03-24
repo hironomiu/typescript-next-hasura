@@ -1,5 +1,27 @@
 # typescript-next-hasura
 
+## SetUp
+
+`./.env.local`
+
+```
+NEXT_PUBLIC_HASURA_URL=
+```
+
+`./.env.test.local`
+
+```
+NEXT_PUBLIC_HASURA_URL=
+```
+
+## Run
+
+```
+yarn run dev
+```
+
+## Install Memo
+
 ```
 yarn create next-app .
 ```
@@ -7,8 +29,6 @@ yarn create next-app .
 ```
 yarn add @apollo/client @apollo/react-hooks cross-fetch @heroicons/react
 ```
-
-`next-page-tester`は要確認(Next v12 では動作しないため)
 
 ```
 yarn add -D msw@0.35.0 next-page-tester jest @testing-library/react @types/jest @testing-library/jest-dom @testing-library/dom babel-jest @babel/core @testing-library/user-event jest-css-modules
