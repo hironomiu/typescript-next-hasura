@@ -13,9 +13,14 @@ describe('TabA', () => {
     userEvent.click(screen.getByTestId('toggle-button'))
     expect(await screen.findByText('toggle!!')).toBeInTheDocument()
   })
-  it('', () => {
+  it('', async () => {
     render(<TabA />)
-    expect(screen.getByTestId('input-input')).toBeInTheDocument()
-    expect(screen.getByTestId('input-button')).toBeInTheDocument()
+    const input = screen.getByTestId('input-input')
+    const button = screen.getByTestId('input-button')
+    expect(input).toBeInTheDocument()
+    expect(button).toBeInTheDocument()
+    userEvent.type(input, 'dummy')
+    userEvent.click(button)
+    expect(await screen.findByText('dummy')).toBeInTheDocument()
   })
 })

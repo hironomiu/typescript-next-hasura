@@ -10,7 +10,10 @@ const TabA = memo(function TabA(): JSX.Element {
   const memos = useReactiveVar(memoVar)
   const toggle = useReactiveVar(toggleVar)
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInput((_prev) => (_prev = e.target.value))
+    // console.log(e.target.value)
+    // TODO prevで渡すとtest(TabA.test.tsx)で`dummy`をtypeした際に`dmy`と1文字おきの結果になる(上のconsole.logで確認)
+    // setInput((_prev) => (_prev = e.target.value))
+    setInput(e.target.value)
   }
 
   const handleClickToggle = () => {

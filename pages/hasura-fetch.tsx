@@ -99,7 +99,9 @@ const HasuraFetch = (): JSX.Element => {
           className="border px-2"
           type="text"
           value={input.name}
-          onChange={(e) => setInput({ ...input, name: e.target.value })}
+          onChange={(e) =>
+            setInput((_prev) => (_prev = { ...input, name: e.target.value }))
+          }
         />
         <button
           className="bg-blue-300 mx-2 px-4 rounded"
