@@ -4,16 +4,16 @@ import userEvent from '@testing-library/user-event'
 import TabA from '../components/TabA'
 
 describe('TabA', () => {
-  it('', () => {
+  it('TabAのレンダリング', () => {
     render(<TabA />)
     expect(screen.getByText('TabA makeVar')).toBeInTheDocument()
   })
-  it('', async () => {
+  it('makeVarでのData toggleの確認', async () => {
     render(<TabA />)
     userEvent.click(screen.getByTestId('toggle-button'))
     expect(await screen.findByText('toggle!!')).toBeInTheDocument()
   })
-  it('', async () => {
+  it('makeVar(+ useState)でのglobal stateでのデータ挿入(input & button)と挿入後の表示の確認', async () => {
     render(<TabA />)
     const input = screen.getByTestId('input-input')
     const button = screen.getByTestId('input-button')
