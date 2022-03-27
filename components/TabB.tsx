@@ -1,11 +1,11 @@
 import { memo } from 'react'
-import { memoVar, toggleVar } from '../cache'
+import { memosVar, toggleVar } from '../cache'
 import { useReactiveVar } from '@apollo/client'
 
 // memoを使う際、下に引っかかるため () => から function FuncName() に修正
 // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/display-name.md
 const TabB = memo(function TabB(): JSX.Element {
-  const memos = useReactiveVar(memoVar)
+  const memos = useReactiveVar(memosVar)
   const toggle = useReactiveVar(toggleVar)
 
   console.log(toggle)
