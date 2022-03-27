@@ -2,16 +2,23 @@
 
 ## SetUp
 
+| パラメータ             | 設定値                                  |
+| :--------------------- | :-------------------------------------- |
+| NEXT_PUBLIC_HASURA_URL | Hasura の URL                           |
+| NEXT_PUBLIC_HASURA_KEY | Hasura に設定した x-hasura-admin-secret |
+
 `./.env.local`
 
 ```
 NEXT_PUBLIC_HASURA_URL=
+NEXT_PUBLIC_HASURA_KEY=
 ```
 
 `./.env.test.local`
 
 ```
 NEXT_PUBLIC_HASURA_URL=
+NEXT_PUBLIC_HASURA_KEY=
 ```
 
 ## Run
