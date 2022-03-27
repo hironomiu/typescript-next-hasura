@@ -1,12 +1,15 @@
 import Link from 'next/link'
+import { useReactiveVar } from '@apollo/client'
+import { serviceNameVar } from '../cache'
 
 const Header = (): JSX.Element => {
+  const serviceName = useReactiveVar(serviceNameVar)
   return (
     <div className="flex flex-col bg-gray-300 w-screen">
       <header className="flex flex-row h-10 justify-between items-center">
         <div className="ml-4">
           <Link href="/">
-            <a className="px-2">Home</a>
+            <a className="px-2">{serviceName}</a>
           </Link>
           <Link href="/tab-a">
             <a className="px-2">TabA</a>

@@ -5,3 +5,4 @@ interface Memo {
 
 export const memoVar = makeVar<Memo[]>([])
 export const toggleVar = makeVar(false)
+export const serviceNameVar = makeVar('Supre Web Site!!')
