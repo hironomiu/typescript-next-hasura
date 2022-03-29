@@ -8,6 +8,7 @@ import {
   DeleteUserMutation,
 } from '../types/generated/graphql'
 import FetchLine from '../components/FetchLine'
+import FetchForm from '../components/FetchForm'
 
 const HasuraFetch = (): JSX.Element => {
   const [input, setInput] = useState({ id: '', name: '' })
@@ -92,29 +93,11 @@ const HasuraFetch = (): JSX.Element => {
   return (
     <Layout title="hasura-fetch">
       <h1>Fetch</h1>
-      <form className="">
-        <input
-          className="border px-2"
-          type="text"
-          value={input.name}
-          onChange={(e) =>
-            setInput((_prev) => (_prev = { ...input, name: e.target.value }))
-          }
-        />
-        <button
-          className="bg-blue-300 mx-2 px-4 rounded"
-          disabled={!input.name}
-          onClick={handleClick}
-          data-testid="add-button"
-        >
-          追加
-        </button>
-      </form>
+      <FetchForm input={input} setInput={setInput} handleClick={handleClick} />
       {data?.users.map((user) => (
         <FetchLine
           key={user.id}
           user={user}
-          // TODO FetchLine側でdelete_users_by_pkを用意する
           delete_users_by_pk={delete_users_by_pk}
         />
       ))}
