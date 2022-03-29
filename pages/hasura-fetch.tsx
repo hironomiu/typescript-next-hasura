@@ -9,6 +9,7 @@ import {
 } from '../types/generated/graphql'
 import FetchLine from '../components/FetchLine'
 import FetchForm from '../components/FetchForm'
+import Fetch from '../components/Fetch'
 
 const HasuraFetch = (): JSX.Element => {
   const [input, setInput] = useState({ id: '', name: '' })
@@ -90,17 +91,12 @@ const HasuraFetch = (): JSX.Element => {
     }
     setInput({ id: '', name: '' })
   }
+
   return (
     <Layout title="hasura-fetch">
       <h1>Fetch</h1>
       <FetchForm input={input} setInput={setInput} handleClick={handleClick} />
-      {data?.users.map((user) => (
-        <FetchLine
-          key={user.id}
-          user={user}
-          delete_users_by_pk={delete_users_by_pk}
-        />
-      ))}
+      <Fetch data={data} delete_users_by_pk={delete_users_by_pk} />
     </Layout>
   )
 }

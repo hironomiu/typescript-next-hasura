@@ -1,16 +1,16 @@
-import React from 'react'
-
 type User = {
   __typename?: 'users'
   id: any
   name: string
   created_at: any
 }
+
 const FetchLine = ({
   user,
   delete_users_by_pk,
 }: {
   user: User
+  // TODO 型
   delete_users_by_pk: any
 }) => {
   return (
