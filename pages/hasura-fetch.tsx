@@ -7,6 +7,7 @@ import {
   CreateUserMutation,
   DeleteUserMutation,
 } from '../types/generated/graphql'
+import FetchLine from '../components/FetchLine'
 
 const HasuraFetch = (): JSX.Element => {
   const [input, setInput] = useState({ id: '', name: '' })
@@ -49,17 +50,15 @@ const HasuraFetch = (): JSX.Element => {
     }
   )
 
-  // TODO Only absolute URLs are supported
-  // HasuraFetch.test.tsxが上のエラーで落ちる
-
   type LoadingOrErrorProps<T> = {
     title: T
     message: T
   }
+
   const LoadingOrError = (props: LoadingOrErrorProps<string>): JSX.Element => {
     return (
       <Layout title={props.title}>
-        <p>Error:{props.message}</p>
+        <p>{props.message}</p>
       </Layout>
     )
   }
@@ -75,8 +74,7 @@ const HasuraFetch = (): JSX.Element => {
     return <LoadingOrError title="hasura error" message={del.error.message} />
 
   if (create.loading || del.loading || loading)
-    // return <LoadingOrError title="hasura loading" message="loading..." />
-    return <p>Loading...</p>
+    return <LoadingOrError title="hasura loading" message="Loading..." />
 
   const handleClick = async (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -112,33 +110,14 @@ const HasuraFetch = (): JSX.Element => {
           追加
         </button>
       </form>
-      {data?.users.map((user) => {
-        // TODO 綺麗にする
-        return (
-          <div key={user.id} className="flex flex-row my-2">
-            <p>{user.name}</p>
-            {/* TODO 更新処理の追加 */}
-            <button
-              onClick={() => null}
-              className="border px-4 mx-2 bg-orange-300 rounded"
-            >
-              更新
-            </button>
-            <button
-              onClick={async () =>
-                await delete_users_by_pk({
-                  variables: {
-                    id: user.id,
-                  },
-                })
-              }
-              className="border px-4 mx-2 rounded bg-green-500"
-            >
-              削除
-            </button>
-          </div>
-        )
-      })}
+      {data?.users.map((user) => (
+        <FetchLine
+          key={user.id}
+          user={user}
+          // TODO FetchLine側でdelete_users_by_pkを用意する
+          delete_users_by_pk={delete_users_by_pk}
+        />
+      ))}
     </Layout>
   )
 }
