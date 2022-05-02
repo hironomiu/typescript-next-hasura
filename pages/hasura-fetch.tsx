@@ -1,11 +1,17 @@
 import { FormEvent, useState } from 'react'
 import Layout from '../components/Layout'
 import { useMutation, useQuery } from '@apollo/client'
-import { GET_USERS, CREATE_USER, DELETE_USER } from '../queries/queries'
+import {
+  GET_USERS,
+  CREATE_USER,
+  DELETE_USER,
+  UPDATE_USER,
+} from '../queries/queries'
 import {
   GetUsersQuery,
   CreateUserMutation,
   DeleteUserMutation,
+  UpdateUserMutation,
 } from '../types/generated/graphql'
 import FetchLine from '../components/FetchLine'
 import FetchForm from '../components/FetchForm'
@@ -44,6 +50,23 @@ const HasuraFetch = (): JSX.Element => {
             users(existingUsers, { readField }) {
               return existingUsers.filter(
                 (user) => delete_users_by_pk.id !== readField('id', user)
+              )
+            },
+          },
+        })
+      },
+    }
+  )
+
+  const [update_users_by_pk, update] = useMutation<UpdateUserMutation>(
+    UPDATE_USER,
+    {
+      update(cache, { data: { update_users_by_pk } }) {
+        cache.modify({
+          fields: {
+            users(existingUsers, { readField }) {
+              return existingUsers.filter(
+                (user) => update_users_by_pk.id !== readField('id', user)
               )
             },
           },
@@ -96,7 +119,11 @@ const HasuraFetch = (): JSX.Element => {
     <Layout title="hasura-fetch">
       <h1>Fetch</h1>
       <FetchForm input={input} setInput={setInput} handleClick={handleClick} />
-      <Fetch data={data} delete_users_by_pk={delete_users_by_pk} />
+      <Fetch
+        data={data}
+        delete_users_by_pk={delete_users_by_pk}
+        update_users_by_pk={update_users_by_pk}
+      />
     </Layout>
   )
 }
