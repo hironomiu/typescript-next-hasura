@@ -7,6 +7,7 @@ import { isUpdateModalOnVar, isDelVar } from '../cache'
 import FetchForm from '../components/FetchForm'
 import Fetch from '../components/Fetch'
 import UpdateModal from '../components/modal/UpdateModal'
+import LoadingOrError from '../components/LoadingOrError'
 
 const HasuraFetch = (): JSX.Element => {
   const [input, setInput] = useState({ id: '', name: '' })
@@ -33,18 +34,6 @@ const HasuraFetch = (): JSX.Element => {
     }
   )
 
-  type LoadingOrErrorProps<T> = {
-    title: T
-    message: T
-  }
-
-  const LoadingOrError = (props: LoadingOrErrorProps<string>): JSX.Element => {
-    return (
-      <Layout title={props.title}>
-        <p>{props.message}</p>
-      </Layout>
-    )
-  }
   if (error)
     return <LoadingOrError title="hasura error" message={error.message} />
 
