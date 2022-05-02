@@ -2,7 +2,7 @@ import { useReactiveVar, useMutation } from '@apollo/client'
 import { isUpdateModalOnVar, updateUserVar, User } from '../cache'
 import { DeleteUserMutation } from '../types/generated/graphql'
 import { DELETE_USER } from '../queries/queries'
-
+import Layout from './Layout'
 const FetchLine = ({ user }: { user: User }) => {
   const isUpdateModalOn = useReactiveVar(isUpdateModalOnVar)
   // TODO: 命名 del
@@ -23,6 +23,16 @@ const FetchLine = ({ user }: { user: User }) => {
       },
     }
   )
+
+  // TODO: pages/hasura-fetchに状態を伝える
+  if (del.loading) {
+    // return <LoadingOrError title="hasura loading" message="Loading..." />
+  }
+
+  // TODO: pages/hasura-fetchに状態を伝える
+  if (del.error) {
+    // return <LoadingOrError title="hasura error" message={del.error.message} />
+  }
 
   return (
     <div className="flex flex-row my-2" key={user.id}>

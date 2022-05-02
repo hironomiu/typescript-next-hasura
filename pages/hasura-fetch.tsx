@@ -53,9 +53,6 @@ const HasuraFetch = (): JSX.Element => {
       <LoadingOrError title="hasura error" message={create.error.message} />
     )
 
-  // if (isDel.error)
-  //   return <LoadingOrError title="hasura error" message={isDel.error.message} />
-  // if (create.loading || isDel.loading || loading)
   if (create.loading || loading)
     return <LoadingOrError title="hasura loading" message="Loading..." />
 
