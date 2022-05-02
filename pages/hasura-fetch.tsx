@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react'
 import Layout from '../components/Layout'
-import { useMutation, useQuery } from '@apollo/client'
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client'
 import {
   GET_USERS,
   CREATE_USER,
@@ -13,12 +13,15 @@ import {
   DeleteUserMutation,
   UpdateUserMutation,
 } from '../types/generated/graphql'
+import { isUpdateModalOnVar } from '../cache'
 import FetchLine from '../components/FetchLine'
 import FetchForm from '../components/FetchForm'
 import Fetch from '../components/Fetch'
+import UpdateModal from '../components/modal/UpdateModal'
 
 const HasuraFetch = (): JSX.Element => {
   const [input, setInput] = useState({ id: '', name: '' })
+  const isUpdateModalOn = useReactiveVar(isUpdateModalOnVar)
   // cache-and-networkなのでloadingは不要
   const { data, error, loading } = useQuery<GetUsersQuery>(GET_USERS, {
     fetchPolicy: 'cache-and-network',
@@ -124,6 +127,7 @@ const HasuraFetch = (): JSX.Element => {
         delete_users_by_pk={delete_users_by_pk}
         update_users_by_pk={update_users_by_pk}
       />
+      {isUpdateModalOn ? <UpdateModal /> : null}
     </Layout>
   )
 }
