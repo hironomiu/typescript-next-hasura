@@ -1,4 +1,6 @@
-import { makeVar } from '@apollo/client'
+import { makeVar, MutationResult } from '@apollo/client'
+import { DeleteUserMutation } from '../types/generated/graphql'
+
 interface Memo {
   title: string
 }
@@ -21,3 +23,5 @@ export const updateUserVar = makeVar<User>({
   created_at: '',
 })
 export const isUpdateModalOnVar = makeVar<boolean>(false)
+
+export const isDelVar = makeVar<MutationResult<DeleteUserMutation>>(null)

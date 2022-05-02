@@ -1,23 +1,29 @@
-import { useReactiveVar } from '@apollo/client'
+import { useReactiveVar, useMutation } from '@apollo/client'
 import { isUpdateModalOnVar, updateUserVar, User } from '../cache'
-// type User = {
-//   __typename?: 'users'
-//   id: any
-//   name: string
-//   created_at: any
-// }
+import { DeleteUserMutation } from '../types/generated/graphql'
+import { DELETE_USER } from '../queries/queries'
 
-const FetchLine = ({
-  user,
-  delete_users_by_pk,
-  update_users_by_pk,
-}: {
-  user: User
-  // TODO 型
-  delete_users_by_pk: any
-  update_users_by_pk: any
-}) => {
+const FetchLine = ({ user }: { user: User }) => {
   const isUpdateModalOn = useReactiveVar(isUpdateModalOnVar)
+  // TODO: 命名 del
+  // TODO: 削除実行中の状態を管理する（error & loading的な）
+  const [delete_users_by_pk, del] = useMutation<DeleteUserMutation>(
+    DELETE_USER,
+    {
+      update(cache, { data: { delete_users_by_pk } }) {
+        cache.modify({
+          fields: {
+            users(existingUsers, { readField }) {
+              return existingUsers.filter(
+                (user) => delete_users_by_pk.id !== readField('id', user)
+              )
+            },
+          },
+        })
+      },
+    }
+  )
+
   return (
     <div className="flex flex-row my-2" key={user.id}>
       <p>{user.name}</p>
@@ -31,13 +37,13 @@ const FetchLine = ({
         更新
       </button>
       <button
-        onClick={async () =>
+        onClick={async () => {
           await delete_users_by_pk({
             variables: {
               id: user.id,
             },
           })
-        }
+        }}
         className="border px-4 mx-2 rounded bg-green-500"
       >
         削除

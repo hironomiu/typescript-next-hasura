@@ -1,20 +1,9 @@
 import { FormEvent, useState } from 'react'
 import Layout from '../components/Layout'
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client'
-import {
-  GET_USERS,
-  CREATE_USER,
-  DELETE_USER,
-  UPDATE_USER,
-} from '../queries/queries'
-import {
-  GetUsersQuery,
-  CreateUserMutation,
-  DeleteUserMutation,
-  UpdateUserMutation,
-} from '../types/generated/graphql'
-import { isUpdateModalOnVar } from '../cache'
-import FetchLine from '../components/FetchLine'
+import { GET_USERS, CREATE_USER } from '../queries/queries'
+import { GetUsersQuery, CreateUserMutation } from '../types/generated/graphql'
+import { isUpdateModalOnVar, isDelVar } from '../cache'
 import FetchForm from '../components/FetchForm'
 import Fetch from '../components/Fetch'
 import UpdateModal from '../components/modal/UpdateModal'
@@ -22,6 +11,7 @@ import UpdateModal from '../components/modal/UpdateModal'
 const HasuraFetch = (): JSX.Element => {
   const [input, setInput] = useState({ id: '', name: '' })
   const isUpdateModalOn = useReactiveVar(isUpdateModalOnVar)
+  const isDel = useReactiveVar(isDelVar)
   // cache-and-networkなのでloadingは不要
   const { data, error, loading } = useQuery<GetUsersQuery>(GET_USERS, {
     fetchPolicy: 'cache-and-network',
@@ -36,41 +26,6 @@ const HasuraFetch = (): JSX.Element => {
           fields: {
             users(existingUsers, { toReference }) {
               return [toReference(cacheId), ...existingUsers]
-            },
-          },
-        })
-      },
-    }
-  )
-
-  // TODO 命名 del
-  const [delete_users_by_pk, del] = useMutation<DeleteUserMutation>(
-    DELETE_USER,
-    {
-      update(cache, { data: { delete_users_by_pk } }) {
-        cache.modify({
-          fields: {
-            users(existingUsers, { readField }) {
-              return existingUsers.filter(
-                (user) => delete_users_by_pk.id !== readField('id', user)
-              )
-            },
-          },
-        })
-      },
-    }
-  )
-
-  const [update_users_by_pk, update] = useMutation<UpdateUserMutation>(
-    UPDATE_USER,
-    {
-      update(cache, { data: { update_users_by_pk } }) {
-        cache.modify({
-          fields: {
-            users(existingUsers, { readField }) {
-              return existingUsers.filter(
-                (user) => update_users_by_pk.id !== readField('id', user)
-              )
             },
           },
         })
@@ -98,10 +53,10 @@ const HasuraFetch = (): JSX.Element => {
       <LoadingOrError title="hasura error" message={create.error.message} />
     )
 
-  if (del.error)
-    return <LoadingOrError title="hasura error" message={del.error.message} />
-
-  if (create.loading || del.loading || loading)
+  // if (isDel.error)
+  //   return <LoadingOrError title="hasura error" message={isDel.error.message} />
+  // if (create.loading || isDel.loading || loading)
+  if (create.loading || loading)
     return <LoadingOrError title="hasura loading" message="Loading..." />
 
   const handleClick = async (e: FormEvent<HTMLButtonElement>) => {
@@ -122,11 +77,7 @@ const HasuraFetch = (): JSX.Element => {
     <Layout title="hasura-fetch">
       <h1>Fetch</h1>
       <FetchForm input={input} setInput={setInput} handleClick={handleClick} />
-      <Fetch
-        data={data}
-        delete_users_by_pk={delete_users_by_pk}
-        update_users_by_pk={update_users_by_pk}
-      />
+      <Fetch data={data} />
       {isUpdateModalOn ? <UpdateModal /> : null}
     </Layout>
   )
